@@ -1,0 +1,9 @@
+transaction_reference,amount,status,date,description
+TXN001,100.50,completed,2024-01-15,Payment for Order #1234
+TXN002,250.00,completed,2024-01-15,Subscription renewal
+TXN003,75.25,pending,2024-01-16,Refund request
+TXN004,500.00,completed,2024-01-16,Large purchase
+TXN005,25.99,failed,2024-01-17,Small item purchase
+TXN006,150.00,completed,2024-01-17,Service payment
+TXN007,300.75,completed,2024-01-18,Monthly billing
+TXN008,45.50,pending,2024-01-18,Processing payment

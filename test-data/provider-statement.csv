@@ -1,0 +1,8 @@
+transaction_reference,amount,status,date,description
+TXN001,100.50,completed,2024-01-15,Payment processed
+TXN002,255.00,completed,2024-01-15,Subscription payment
+TXN004,500.00,completed,2024-01-16,Large transaction
+TXN006,150.00,completed,2024-01-17,Service fee
+TXN007,300.75,pending,2024-01-18,Monthly charge
+TXN009,89.99,completed,2024-01-19,New transaction
+TXN010,199.50,failed,2024-01-19,Payment attempt

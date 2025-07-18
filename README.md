@@ -40,6 +40,7 @@ Here's what the main dashboard looks like:
 - Real-time validation and error handling
 - Automatic detection of required columns
 
+Screenshot:
 ![Upload Interface for the Mini Reconciliation Tool.](screenshots/upload.png)
 
 ### 2. Data Processing
@@ -60,8 +61,10 @@ Here's what the main dashboard looks like:
 - **Provider Only**: Transactions present only in provider statement
 - Visual highlighting of specific field differences
 
+Screenshot:
 ![Output Interface for the Mini Reconciliation Tool.](screenshots/output1.png)
 
+Screenshot:
 ![Output Interface for the Mini Reconciliation Tool.](screenshots/output2.png)
 
 ### 5. Export & Analysis

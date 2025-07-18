@@ -10,6 +10,10 @@ A modern, web-based reconciliation tool that compares transaction data between i
 
 The Mini Reconciliation Tool streamlines the process of comparing transaction files from different sources, automatically identifying matches, mismatches, and discrepancies. Built with modern web technologies, it provides an intuitive interface for financial teams to ensure data accuracy across systems.
 
+Here's what the main dashboard looks like:
+
+![Main dashboard for the Mini Reconciliation Tool.](screenshots/dashboard.png)
+
 ### Key Features
 
 - **🔄 Smart Transaction Matching** - Automatically matches transactions by reference ID with intelligent algorithms
@@ -36,6 +40,8 @@ The Mini Reconciliation Tool streamlines the process of comparing transaction fi
 - Real-time validation and error handling
 - Automatic detection of required columns
 
+![Upload Interface for the Mini Reconciliation Tool.](screenshots/upload.png)
+
 ### 2. Data Processing
 - Parses CSV files with header detection
 - Validates transaction_reference column presence
@@ -53,6 +59,10 @@ The Mini Reconciliation Tool streamlines the process of comparing transaction fi
 - **Internal Only**: Transactions present only in internal system
 - **Provider Only**: Transactions present only in provider statement
 - Visual highlighting of specific field differences
+
+![Output Interface for the Mini Reconciliation Tool.](screenshots/output1.png)
+
+![Output Interface for the Mini Reconciliation Tool.](screenshots/output2.png)
 
 ### 5. Export & Analysis
 - Export each category to CSV with timestamped filenames

@@ -3,7 +3,7 @@
 ![Mini Reconciliation Tool](https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1200&h=400&fit=crop)
 A modern, web-based reconciliation tool that compares transaction data between internal systems and payment processors to identify discrepancies, ensuring financial accuracy and compliance.
 
-## LIVE LINK IS HERE: https://eclectic-klepon-0c84a9.netlify.app/
+## LIVE LINK IS HERE: (https://mini-recon-tool.netlify.app/)
 
 
 ## 🎯 Overview

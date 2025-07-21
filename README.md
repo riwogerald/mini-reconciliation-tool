@@ -3,14 +3,12 @@
 ![Mini Reconciliation Tool](https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1200&h=400&fit=crop)
 A modern, web-based reconciliation tool that compares transaction data between internal systems and payment processors to identify discrepancies, ensuring financial accuracy and compliance.
 
-## LIVE LINK IS HERE: (https://mini-recon-tool.netlify.app/)
+## You can test the App here: (https://mini-recon-tool.netlify.app/)
 
 
 ## 🎯 Overview
 
 The Mini Reconciliation Tool streamlines the process of comparing transaction files from different sources, automatically identifying matches, mismatches, and discrepancies. Built with modern web technologies, it provides an intuitive interface for financial teams to ensure data accuracy across systems.
-
-Here's what the main dashboard looks like:
 
 ![Main dashboard for the Mini Reconciliation Tool.](screenshots/dashboard.png)
 
@@ -40,8 +38,9 @@ Here's what the main dashboard looks like:
 - Real-time validation and error handling
 - Automatic detection of required columns
 
-Screenshot:
+Screenshot Showing Uploads:
 ![Upload Interface for the Mini Reconciliation Tool.](screenshots/upload.png)
+![Upload Interface for the Mini Reconciliation Tool.](screenshots/upload2.png)
 
 ### 2. Data Processing
 - Parses CSV files with header detection
@@ -61,11 +60,11 @@ Screenshot:
 - **Provider Only**: Transactions present only in provider statement
 - Visual highlighting of specific field differences
 
-Screenshot:
+Screenshot showing the reconciliation output:
 ![Output Interface for the Mini Reconciliation Tool.](screenshots/output1.png)
-
-Screenshot:
 ![Output Interface for the Mini Reconciliation Tool.](screenshots/output2.png)
+![Output Interface for the Mini Reconciliation Tool.](screenshots/output3.png)
+![Output Interface for the Mini Reconciliation Tool.](screenshots/output4.png)
 
 ### 5. Export & Analysis
 - Export each category to CSV with timestamped filenames

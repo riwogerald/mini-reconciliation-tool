@@ -38,7 +38,7 @@ The Mini Reconciliation Tool streamlines the process of comparing transaction fi
 - Real-time validation and error handling
 - Automatic detection of required columns
 
-Screenshot Showing Uploads:
+Screenshots Showing Uploads:
 ![Upload Interface for the Mini Reconciliation Tool.](screenshots/upload.png)
 ![Upload Interface for the Mini Reconciliation Tool.](screenshots/upload2.png)
 

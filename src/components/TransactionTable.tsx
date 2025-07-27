@@ -70,7 +70,7 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
   const paginatedData = filteredData.slice(startIndex, startIndex + itemsPerPage);
 
   const handleExport = () => {
-    let exportData: any[] = [];
+    let exportData: Record<string, string | number>[] = [];
     const timestamp = new Date().toISOString().split('T')[0];
     
     if (type === 'matched') {
@@ -89,7 +89,7 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
     exportToCSV(exportData, `${title.toLowerCase().replace(/\s+/g, '-')}-${timestamp}.csv`);
   };
 
-  const formatAmount = (amount: any): string => {
+  const formatAmount = (amount: string | number | undefined): string => {
     if (amount == null) return 'N/A';
     const num = typeof amount === 'number' ? amount : parseFloat(amount);
     return isNaN(num) ? amount.toString() : `$${num.toFixed(2)}`;

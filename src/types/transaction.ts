@@ -4,7 +4,7 @@ export interface Transaction {
   status: string;
   date?: string;
   description?: string;
-  [key: string]: any;
+  [key: string]: string | number | undefined;
 }
 
 export interface ParsedFile {
@@ -29,8 +29,8 @@ export interface TransactionMatch {
 
 export interface FieldMismatch {
   field: string;
-  internalValue: any;
-  providerValue: any;
+  internalValue: string | number | undefined;
+  providerValue: string | number | undefined;
 }
 
 export interface ReconciliationStats {

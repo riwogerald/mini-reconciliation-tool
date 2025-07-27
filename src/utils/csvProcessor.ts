@@ -85,7 +85,7 @@ const findDuplicateReferences = (data: Transaction[]): string[] => {
   return duplicates;
 };
 
-export const exportToCSV = (data: any[], filename: string): void => {
+export const exportToCSV = (data: Record<string, string | number>[], filename: string): void => {
   try {
     if (data.length === 0) {
       throw new Error('No data to export');

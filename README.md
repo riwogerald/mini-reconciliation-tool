@@ -146,16 +146,68 @@ mini-reconciliation-tool/
 
 ### Sample Data
 
-The `test-data/` directory contains sample CSV files for testing:
+The `test-data/` directory now contains comprehensive CSV files for various testing scenarios:
 
-- `internal-system.csv` - 8 sample internal transactions
-- `provider-statement.csv` - 7 sample provider transactions
+- **Basic Test Files:**
+  - `internal-system.csv` - 8 sample internal transactions
+  - `provider-statement.csv` - 7 sample provider transactions
+- **Extended Datasets:**
+  - `large-internal-system.csv` - 55 transactions for extended testing
+  - `large-provider-statement.csv` - 50 transactions with varied scenarios
+- **Edge Case Files:**
+  - `edge-case-internal.csv` - Edge cases with 27 transactions
+  - `edge-case-provider.csv` - Edge cases with 31 transactions
+- **Error Testing Files:**
+  - `invalid-missing-columns.csv` - Test for invalid columns
+  - `empty-file.csv` - Empty dataset
+- **Performance Test Files:**
+  - `performance-test-internal.csv` - Structured data for performance testing
+  - `generate-large-dataset.ps1` - PowerShell script for generating large data
 
 ### Expected Results
 - **Match Rate**: ~67%
 - **Matched Transactions**: 6 (4 perfect + 2 with mismatches)
 - **Internal Only**: 3 transactions
 - **Provider Only**: 2 transactions
+
+### Testing Scenarios
+
+#### 1. Basic Functionality Testing
+Use `internal-system.csv` and `provider-statement.csv` for initial validation.
+
+#### 2. Large Dataset Testing
+Use `large-internal-system.csv` and `large-provider-statement.csv` to test:
+- Pagination functionality
+- Search capabilities
+- Performance with larger datasets
+- Export functionality
+
+#### 3. Edge Case Testing
+Use `edge-case-internal.csv` and `edge-case-provider.csv` to test:
+- Various data formats and edge cases
+- Duplicate transaction handling
+- Empty fields and missing data
+- Data normalization
+- Mixed case statuses
+- Different date formats
+
+#### 4. Error Handling Testing
+- Use `invalid-missing-columns.csv` to test column validation
+- Use `empty-file.csv` to test empty dataset handling
+- Try uploading non-CSV files to test format validation
+
+#### 5. Performance Testing
+Use the PowerShell script to generate large datasets:
+```powershell
+# Navigate to test-data directory
+cd test-data
+
+# Generate 1000 transactions (default)
+.\generate-large-dataset.ps1
+
+# Generate 5000 transactions
+.\generate-large-dataset.ps1 -NumTransactions 5000 -OutputFile "large-perf-test.csv"
+```
 
 ### Running Tests
 

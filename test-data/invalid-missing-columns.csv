@@ -1,0 +1,4 @@
+ref_id,value,state,transaction_date,notes
+REF001,100.50,complete,2024-01-01,Missing transaction_reference column
+REF002,200.75,pending,2024-01-02,This should fail validation
+REF003,300.25,failed,2024-01-03,Wrong column names used

@@ -1,14 +1,75 @@
 # Testing the Mini Reconciliation Tool
 
-## Test Files Created
+## Test Files Overview
+
+This directory contains comprehensive test data for validating the Mini Reconciliation Tool across various scenarios.
+
+## Basic Test Files
 
 ### 1. internal-system.csv
-- Contains 8 transactions from your internal system
-- Includes: TXN001-TXN008
+- **Purpose**: Basic functionality testing
+- **Size**: 8 transactions
+- **Content**: TXN001-TXN008
+- **Use Case**: Initial validation of core reconciliation features
 
 ### 2. provider-statement.csv  
-- Contains 7 transactions from the payment provider
-- Includes: TXN001, TXN002, TXN004, TXN006, TXN007, TXN009, TXN010
+- **Purpose**: Basic functionality testing
+- **Size**: 7 transactions  
+- **Content**: TXN001, TXN002, TXN004, TXN006, TXN007, TXN009, TXN010
+- **Use Case**: Partner file for basic reconciliation testing
+
+## Extended Test Files
+
+### 3. large-internal-system.csv
+- **Purpose**: Extended functionality and UI testing
+- **Size**: 55 transactions
+- **Content**: TXN001-TXN055 with varied amounts, dates, and statuses
+- **Use Case**: Test pagination, search, filtering, and larger dataset handling
+
+### 4. large-provider-statement.csv
+- **Purpose**: Extended functionality testing
+- **Size**: 50 transactions
+- **Content**: Mix of matched, mismatched, and provider-only transactions
+- **Use Case**: Partner file for extended reconciliation scenarios
+
+## Edge Case Test Files
+
+### 5. edge-case-internal.csv
+- **Purpose**: Data validation and edge case handling
+- **Size**: 27 transactions
+- **Content**: Various formatting issues, duplicates, empty fields
+- **Use Case**: Test robustness against problematic data
+
+### 6. edge-case-provider.csv
+- **Purpose**: Mismatch detection and data normalization
+- **Size**: 31 transactions
+- **Content**: Various mismatches, formatting corrections
+- **Use Case**: Validate mismatch detection and data handling
+
+## Error Testing Files
+
+### 7. invalid-missing-columns.csv
+- **Purpose**: Validation error testing
+- **Content**: CSV with wrong column names
+- **Use Case**: Test error handling for invalid file formats
+
+### 8. empty-file.csv
+- **Purpose**: Edge case testing
+- **Content**: Headers only, no data rows
+- **Use Case**: Test handling of empty datasets
+
+## Performance Test Files
+
+### 9. performance-test-internal.csv
+- **Purpose**: Basic performance testing
+- **Size**: 50 transactions
+- **Content**: Structured test data for performance validation
+- **Use Case**: Baseline performance testing
+
+### 10. generate-large-dataset.ps1
+- **Purpose**: Dynamic large dataset generation
+- **Capability**: Generate 1000+ transaction files
+- **Use Case**: Custom performance and stress testing
 
 ## Expected Test Results
 

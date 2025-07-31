@@ -1,0 +1,56 @@
+transaction_reference,amount,status,date,description
+TXN001,125.50,completed,2024-01-15,Payment for Order #1234
+TXN002,275.00,completed,2024-01-15,Premium subscription renewal
+TXN003,85.25,pending,2024-01-16,Customer refund request
+TXN004,520.00,completed,2024-01-16,Large enterprise purchase
+TXN005,35.99,failed,2024-01-17,Small retail item
+TXN006,175.00,completed,2024-01-17,Professional service payment
+TXN007,325.75,completed,2024-01-18,Monthly enterprise billing
+TXN008,55.50,pending,2024-01-18,Processing customer payment
+TXN009,450.00,completed,2024-01-19,Bulk order payment
+TXN010,95.75,completed,2024-01-19,Standard service fee
+TXN011,210.00,pending,2024-01-20,Awaiting confirmation
+TXN012,67.80,completed,2024-01-20,Digital product purchase
+TXN013,890.50,completed,2024-01-21,High-value transaction
+TXN014,42.25,failed,2024-01-21,Payment declined
+TXN015,155.00,completed,2024-01-22,Monthly subscription
+TXN016,78.99,pending,2024-01-22,Processing refund
+TXN017,635.40,completed,2024-01-23,Corporate payment
+TXN018,29.95,completed,2024-01-23,Basic plan upgrade
+TXN019,187.50,pending,2024-01-24,Manual review required
+TXN020,345.75,completed,2024-01-24,Quarterly payment
+TXN021,123.45,completed,2024-01-25,Regular customer payment
+TXN022,567.80,failed,2024-01-25,Insufficient funds
+TXN023,89.00,completed,2024-01-26,Service activation fee
+TXN024,234.60,pending,2024-01-26,Verification in progress
+TXN025,456.90,completed,2024-01-27,Premium feature unlock
+TXN026,76.40,completed,2024-01-27,Add-on service
+TXN027,198.25,completed,2024-01-28,API usage charges
+TXN028,312.75,pending,2024-01-28,Large transfer pending
+TXN029,145.50,completed,2024-01-29,Monthly maintenance
+TXN030,678.20,completed,2024-01-29,Enterprise license
+TXN031,54.75,failed,2024-01-30,Card expired
+TXN032,289.99,completed,2024-01-30,Annual subscription
+TXN033,156.30,pending,2024-01-31,Processing payment
+TXN034,423.80,completed,2024-02-01,Bulk service purchase
+TXN035,91.25,completed,2024-02-01,Standard processing fee
+TXN036,267.50,completed,2024-02-02,Premium support plan
+TXN037,135.75,pending,2024-02-02,Awaiting bank confirmation
+TXN038,598.40,completed,2024-02-03,Major system upgrade
+TXN039,73.60,completed,2024-02-03,Basic feature access
+TXN040,218.90,failed,2024-02-04,Payment gateway error
+TXN041,387.25,completed,2024-02-04,Multi-user license
+TXN042,164.80,completed,2024-02-05,Data storage expansion
+TXN043,529.50,pending,2024-02-05,Large transaction review
+TXN044,95.40,completed,2024-02-06,Monthly backup service
+TXN045,342.75,completed,2024-02-06,Custom integration fee
+TXN046,127.90,completed,2024-02-07,Security audit service
+TXN047,476.30,completed,2024-02-07,Performance optimization
+TXN048,68.75,failed,2024-02-08,Duplicate transaction
+TXN049,255.60,completed,2024-02-08,Compliance check fee
+TXN050,184.45,pending,2024-02-09,Final verification stage
+TXN051,612.80,completed,2024-02-09,Year-end processing
+TXN052,89.30,completed,2024-02-10,Standard maintenance
+TXN053,367.90,completed,2024-02-10,Premium analytics access
+TXN054,142.65,pending,2024-02-11,Manual approval needed
+TXN055,758.40,completed,2024-02-11,Enterprise data migration

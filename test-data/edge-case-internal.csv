@@ -1,0 +1,29 @@
+transaction_reference,amount,status,date,description
+TXN-001,100.00,completed,2024-01-01,Transaction with dash
+TXN_002,200.50,pending,2024-01-02,"Transaction with quotes"
+TXN003,0.01,completed,2024-01-03,Minimal amount test
+TXN004,9999.99,completed,2024-01-04,Maximum amount test
+TXN005,-50.00,completed,2024-01-05,Negative amount refund
+TXN006,100.001,completed,2024-01-06,High precision decimal
+TXN007,100,completed,2024-01-07,Integer amount
+TXN008,"$150.50",completed,2024-01-08,Amount with currency symbol
+TXN009,75.50,COMPLETED,2024-01-09,Uppercase status
+TXN010,85.25,Completed,2024-01-10,Mixed case status
+TXN011,95.75,failed,2024-01-11,Failed transaction
+TXN012,105.25,,2024-01-12,Empty status field
+TXN013,,completed,2024-01-13,Empty amount field
+TXN014,125.50,completed,,Empty date field
+TXN015,135.75,completed,2024-01-15,
+TXN016,145.00,completed,01/16/2024,Different date format
+TXN017,155.25,completed,2024-1-17,Single digit month
+DUPLICATE,200.00,completed,2024-01-18,First duplicate
+DUPLICATE,200.00,completed,2024-01-18,Second duplicate
+TXN019,175.50,pending,2024-01-19,Normal transaction after duplicates
+TXN020,185.75,in_progress,2024-01-20,Underscore in status
+TXN021,195.00,processing,2024-01-21,Different status type
+TXN022,999999.99,completed,2024-01-22,Very large amount
+TXN023,0.001,completed,2024-01-23,Sub-cent amount
+TXN024,50.505,completed,2024-01-24,Three decimal places
+ABC123,75.50,completed,2024-01-25,Alphanumeric reference
+123456,85.25,completed,2024-01-26,Numeric only reference
+TXN-027-SUB,95.75,completed,2024-01-27,Complex reference format

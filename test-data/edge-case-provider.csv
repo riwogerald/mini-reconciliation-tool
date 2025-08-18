@@ -1,0 +1,31 @@
+transaction_reference,amount,status,date,description
+TXN-001,100.01,completed,2024-01-01,Transaction with slight amount difference
+TXN_002,200.50,completed,2024-01-02,Status mismatch - was pending
+TXN003,0.01,completed,2024-01-03,Perfect match for minimal amount
+TXN004,9999.99,completed,2024-01-04,Perfect match for large amount
+TXN006,100.00,completed,2024-01-06,Amount rounded down from high precision
+TXN007,100.00,completed,2024-01-07,Integer amount match
+TXN008,150.50,completed,2024-01-08,Currency symbol removed
+TXN009,75.50,completed,2024-01-09,Case normalized status
+TXN010,85.25,completed,2024-01-10,Case normalized status
+TXN011,95.75,completed,2024-01-11,Status changed from failed to completed
+TXN012,105.25,pending,2024-01-12,Status added where empty
+TXN014,125.50,completed,2024-01-14,Date normalized
+TXN015,135.75,completed,2024-01-15,Description added
+TXN016,145.00,completed,2024-01-16,Date format normalized
+TXN017,155.25,completed,2024-01-17,Date format normalized
+DUPLICATE,200.00,completed,2024-01-18,Only one duplicate in provider
+TXN019,175.50,completed,2024-01-19,Status changed from pending
+TXN020,185.75,completed,2024-01-20,Status normalized
+TXN021,195.00,completed,2024-01-21,Status normalized
+TXN022,999999.99,pending,2024-01-22,Status different for large amount
+TXN023,0.00,completed,2024-01-23,Sub-cent rounded to zero
+TXN024,50.51,completed,2024-01-24,Three decimals rounded to two
+ABC123,75.50,completed,2024-01-25,Alphanumeric reference match
+123456,85.25,pending,2024-01-26,Status mismatch for numeric reference
+TXN-027-SUB,95.75,failed,2024-01-27,Status mismatch for complex reference
+PROVIDER-001,300.00,completed,2024-01-28,Provider-only transaction 1
+PROVIDER-002,250.75,pending,2024-01-29,Provider-only transaction 2
+PROVIDER-003,150.25,failed,2024-01-30,Provider-only transaction 3
+PROV_004,450.50,completed,2024-01-31,Provider-only with underscore
+SETTLEMENT-001,1000.00,completed,2024-02-01,Large settlement transaction

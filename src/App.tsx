@@ -1,20 +1,47 @@
 import React, { useState } from 'react';
-import { BarChart3, Upload, RefreshCw } from 'lucide-react';
+import { BarChart3, Upload, RefreshCw, Layers, FileCheck } from 'lucide-react';
 import { FileUpload } from './components/FileUpload';
+import { BatchFileUpload } from './components/BatchFileUpload';
 import { TransactionTable } from './components/TransactionTable';
 import { ReconciliationSummary } from './components/ReconciliationSummary';
+import { BatchResults } from './components/BatchResults';
 import { LoadingSpinner } from './components/LoadingSpinner';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import { ParsedFile, ReconciliationResult } from './types/transaction';
+import { 
+  ParsedFile, 
+  ReconciliationResult, 
+  ProcessingMode, 
+  FilePair, 
+  FileUploadError,
+  BatchReconciliationResult
+} from './types/transaction';
 import { reconcileTransactions } from './utils/reconciliation';
+import { 
+  processBatchReconciliation, 
+  validateFilePairs 
+} from './utils/batchReconciliation';
 import { CheckCircle, AlertTriangle, XCircle } from 'lucide-react';
 
 function App() {
+  // Processing mode state
+  const [processingMode, setProcessingMode] = useState<ProcessingMode>('single');
+  
+  // Single mode state
   const [internalFile, setInternalFile] = useState<ParsedFile | null>(null);
   const [providerFile, setProviderFile] = useState<ParsedFile | null>(null);
   const [reconciliationResult, setReconciliationResult] = useState<ReconciliationResult | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  
+  // Batch mode state
+  const [filePairs, setFilePairs] = useState<FilePair[]>([]);
+  const [batchErrors, setBatchErrors] = useState<FileUploadError[]>([]);
+  const [batchResult, setBatchResult] = useState<BatchReconciliationResult | null>(null);
+  const [batchProgress, setBatchProgress] = useState<{
+    current: number;
+    total: number;
+    currentPair?: FilePair;
+  } | null>(null);
 
   const handleReconciliation = async () => {
     if (!internalFile || !providerFile) return;
@@ -36,14 +63,62 @@ function App() {
     }
   };
 
+  const handleBatchReconciliation = async () => {
+    if (filePairs.length === 0) return;
+
+    const validation = validateFilePairs(filePairs);
+    if (!validation.valid) {
+      setError(validation.errors.join(', '));
+      return;
+    }
+
+    setIsProcessing(true);
+    setError(null);
+    setBatchProgress({ current: 0, total: filePairs.length });
+
+    try {
+      const result = await processBatchReconciliation(filePairs, {
+        onProgress: (current, total, currentPair) => {
+          setBatchProgress({ current, total, currentPair });
+        },
+        onPairCompleted: (pair) => {
+          // Update the pairs state with completed pair
+          setFilePairs(prev => prev.map(p => p.id === pair.id ? pair : p));
+        },
+        onPairFailed: (pair, error) => {
+          console.error(`Pair ${pair.id} failed:`, error);
+          setFilePairs(prev => prev.map(p => p.id === pair.id ? pair : p));
+        }
+      });
+
+      setBatchResult(result);
+    } catch (error) {
+      console.error('Batch reconciliation error:', error);
+      setError(error instanceof Error ? error.message : 'An unexpected error occurred during batch reconciliation');
+    } finally {
+      setIsProcessing(false);
+      setBatchProgress(null);
+    }
+  };
+
   const resetAll = () => {
     setInternalFile(null);
     setProviderFile(null);
     setReconciliationResult(null);
     setError(null);
+    setFilePairs([]);
+    setBatchErrors([]);
+    setBatchResult(null);
+    setBatchProgress(null);
+  };
+
+  const switchMode = (mode: ProcessingMode) => {
+    resetAll();
+    setProcessingMode(mode);
   };
 
   const canReconcile = internalFile && providerFile && !isProcessing;
+  const canBatchReconcile = filePairs.length > 0 && !isProcessing;
 
   return (
     <ErrorBoundary>
@@ -93,108 +168,290 @@ function App() {
             </div>
           )}
 
-          {/* File Upload Section */}
-          <section className="mb-8 sm:mb-12">
-            <div className="text-center mb-6 sm:mb-8">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 sm:mb-4">
-                Upload Transaction Files
-              </h2>
-              <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                Upload your internal system export and provider statement to identify discrepancies
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-              <FileUpload
-                label="Internal System Export"
-                onFileProcessed={setInternalFile}
-                currentFile={internalFile || undefined}
-                onClearFile={() => {
-                  setInternalFile(null);
-                  setReconciliationResult(null);
-                  setError(null);
-                }}
-              />
-              <FileUpload
-                label="Provider Statement"
-                onFileProcessed={setProviderFile}
-                currentFile={providerFile || undefined}
-                onClearFile={() => {
-                  setProviderFile(null);
-                  setReconciliationResult(null);
-                  setError(null);
-                }}
-              />
-            </div>
-          </section>
-
-          {/* Reconcile Button */}
-          {(internalFile || providerFile) && (
-            <section className="mb-8 sm:mb-12 text-center">
-              <div className="inline-flex flex-col items-center space-y-4">
-                <button
-                  onClick={handleReconciliation}
-                  disabled={!canReconcile}
-                  className={`relative px-8 py-4 sm:px-12 sm:py-5 rounded-xl font-semibold text-lg transition-all duration-300 transform ${
-                    canReconcile
-                      ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl hover:scale-105 active:scale-95'
-                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                  }`}
-                >
-                  {isProcessing ? (
-                    <div className="flex items-center space-x-3">
-                      <LoadingSpinner size="sm" />
-                      <span>Processing Reconciliation...</span>
+          {/* Mode Selection */}
+          {!internalFile && !providerFile && filePairs.length === 0 && !batchResult && (
+            <section className="mb-8 sm:mb-12">
+              <div className="text-center mb-8">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                  Choose Processing Mode
+                </h2>
+                <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed mb-8">
+                  Select how you want to process your transaction files
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                  <button
+                    onClick={() => switchMode('single')}
+                    className={`relative p-8 rounded-2xl border-2 transition-all duration-300 hover:shadow-lg ${
+                      processingMode === 'single'
+                        ? 'border-blue-500 bg-blue-50 shadow-md'
+                        : 'border-gray-200 bg-white hover:border-gray-300'
+                    }`}
+                  >
+                    <div className="flex flex-col items-center">
+                      <div className={`p-4 rounded-xl mb-4 ${
+                        processingMode === 'single' ? 'bg-blue-100' : 'bg-gray-100'
+                      }`}>
+                        <FileCheck className={`w-8 h-8 ${
+                          processingMode === 'single' ? 'text-blue-600' : 'text-gray-600'
+                        }`} />
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">Single File Reconciliation</h3>
+                      <p className="text-gray-600 text-center mb-4">
+                        Process one internal file and one provider file at a time
+                      </p>
+                      <ul className="text-sm text-gray-500 text-left space-y-1">
+                        <li>• Simple one-to-one comparison</li>
+                        <li>• Quick processing</li>
+                        <li>• Detailed results view</li>
+                        <li>• Perfect for smaller datasets</li>
+                      </ul>
                     </div>
-                  ) : (
-                    'Run Reconciliation'
-                  )}
-                </button>
-                
-                {!canReconcile && (internalFile || providerFile) && !isProcessing && (
-                  <p className="text-sm text-gray-500 bg-gray-50 px-4 py-2 rounded-lg border">
-                    Please upload both files to run reconciliation
+                  </button>
+                  
+                  <button
+                    onClick={() => switchMode('batch')}
+                    className={`relative p-8 rounded-2xl border-2 transition-all duration-300 hover:shadow-lg ${
+                      processingMode === 'batch'
+                        ? 'border-purple-500 bg-purple-50 shadow-md'
+                        : 'border-gray-200 bg-white hover:border-gray-300'
+                    }`}
+                  >
+                    <div className="flex flex-col items-center">
+                      <div className={`p-4 rounded-xl mb-4 ${
+                        processingMode === 'batch' ? 'bg-purple-100' : 'bg-gray-100'
+                      }`}>
+                        <Layers className={`w-8 h-8 ${
+                          processingMode === 'batch' ? 'text-purple-600' : 'text-gray-600'
+                        }`} />
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">Batch Processing</h3>
+                      <p className="text-gray-600 text-center mb-4">
+                        Process multiple file pairs simultaneously with advanced features
+                      </p>
+                      <ul className="text-sm text-gray-500 text-left space-y-1">
+                        <li>• Multiple file pair processing</li>
+                        <li>• Aggregate reporting</li>
+                        <li>• Bulk export options</li>
+                        <li>• Progress tracking</li>
+                      </ul>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* Single Mode Content */}
+          {processingMode === 'single' && (
+            <>
+              {/* File Upload Section */}
+              <section className="mb-8 sm:mb-12">
+                <div className="text-center mb-6 sm:mb-8">
+                  <div className="flex items-center justify-center space-x-2 mb-4">
+                    <FileCheck className="w-6 h-6 text-blue-600" />
+                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
+                      Single File Reconciliation
+                    </h2>
+                  </div>
+                  <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                    Upload your internal system export and provider statement to identify discrepancies
                   </p>
-                )}
-              </div>
-            </section>
+                  <button
+                    onClick={() => switchMode('batch')}
+                    className="mt-4 text-sm text-purple-600 hover:text-purple-800 transition-colors"
+                  >
+                    Switch to Batch Processing →
+                  </button>
+                </div>
+                
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+                  <FileUpload
+                    label="Internal System Export"
+                    onFileProcessed={setInternalFile}
+                    currentFile={internalFile || undefined}
+                    onClearFile={() => {
+                      setInternalFile(null);
+                      setReconciliationResult(null);
+                      setError(null);
+                    }}
+                  />
+                  <FileUpload
+                    label="Provider Statement"
+                    onFileProcessed={setProviderFile}
+                    currentFile={providerFile || undefined}
+                    onClearFile={() => {
+                      setProviderFile(null);
+                      setReconciliationResult(null);
+                      setError(null);
+                    }}
+                  />
+                </div>
+              </section>
+
+              {/* Reconcile Button */}
+              {(internalFile || providerFile) && (
+                <section className="mb-8 sm:mb-12 text-center">
+                  <div className="inline-flex flex-col items-center space-y-4">
+                    <button
+                      onClick={handleReconciliation}
+                      disabled={!canReconcile}
+                      className={`relative px-8 py-4 sm:px-12 sm:py-5 rounded-xl font-semibold text-lg transition-all duration-300 transform ${
+                        canReconcile
+                          ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl hover:scale-105 active:scale-95'
+                          : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      }`}
+                    >
+                      {isProcessing ? (
+                        <div className="flex items-center space-x-3">
+                          <LoadingSpinner size="sm" />
+                          <span>Processing Reconciliation...</span>
+                        </div>
+                      ) : (
+                        'Run Reconciliation'
+                      )}
+                    </button>
+                    
+                    {!canReconcile && (internalFile || providerFile) && !isProcessing && (
+                      <p className="text-sm text-gray-500 bg-gray-50 px-4 py-2 rounded-lg border">
+                        Please upload both files to run reconciliation
+                      </p>
+                    )}
+                  </div>
+                </section>
+              )}
+
+              {/* Results Section */}
+              {reconciliationResult && (
+                <section className="space-y-8 sm:space-y-12">
+                  <ReconciliationSummary stats={reconciliationResult.stats} />
+                  
+                  <div className="space-y-6 sm:space-y-8">
+                    <TransactionTable
+                      title="Matched Transactions"
+                      icon={<CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />}
+                      data={reconciliationResult.matched}
+                      type="matched"
+                      colorScheme="green"
+                    />
+                    
+                    <TransactionTable
+                      title="Internal File Only"
+                      icon={<AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600" />}
+                      data={reconciliationResult.internalOnly}
+                      type="internal-only"
+                      colorScheme="amber"
+                    />
+                    
+                    <TransactionTable
+                      title="Provider File Only"
+                      icon={<XCircle className="w-5 h-5 sm:w-6 sm:h-6 text-red-600" />}
+                      data={reconciliationResult.providerOnly}
+                      type="provider-only"
+                      colorScheme="red"
+                    />
+                  </div>
+                </section>
+              )}
+            </>
           )}
 
-          {/* Results Section */}
-          {reconciliationResult && (
-            <section className="space-y-8 sm:space-y-12">
-              <ReconciliationSummary stats={reconciliationResult.stats} />
-              
-              <div className="space-y-6 sm:space-y-8">
-                <TransactionTable
-                  title="Matched Transactions"
-                  icon={<CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />}
-                  data={reconciliationResult.matched}
-                  type="matched"
-                  colorScheme="green"
-                />
-                
-                <TransactionTable
-                  title="Internal File Only"
-                  icon={<AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600" />}
-                  data={reconciliationResult.internalOnly}
-                  type="internal-only"
-                  colorScheme="amber"
-                />
-                
-                <TransactionTable
-                  title="Provider File Only"
-                  icon={<XCircle className="w-5 h-5 sm:w-6 sm:h-6 text-red-600" />}
-                  data={reconciliationResult.providerOnly}
-                  type="provider-only"
-                  colorScheme="red"
-                />
-              </div>
-            </section>
+          {/* Batch Mode Content */}
+          {processingMode === 'batch' && (
+            <>
+              {!batchResult && (
+                <>
+                  <section className="mb-8 sm:mb-12">
+                    <div className="text-center mb-6 sm:mb-8">
+                      <div className="flex items-center justify-center space-x-2 mb-4">
+                        <Layers className="w-6 h-6 text-purple-600" />
+                        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
+                          Batch Processing
+                        </h2>
+                      </div>
+                      <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                        Upload multiple internal system exports and provider statements for batch reconciliation
+                      </p>
+                      <button
+                        onClick={() => switchMode('single')}
+                        className="mt-4 text-sm text-blue-600 hover:text-blue-800 transition-colors"
+                      >
+                        ← Switch to Single File Mode
+                      </button>
+                    </div>
+                    
+                    <BatchFileUpload
+                      onFilePairsChanged={setFilePairs}
+                      onErrorsChanged={setBatchErrors}
+                      isProcessing={isProcessing}
+                    />
+                  </section>
+
+                  {/* Batch Processing Button */}
+                  {filePairs.length > 0 && (
+                    <section className="mb-8 sm:mb-12 text-center">
+                      <div className="inline-flex flex-col items-center space-y-4">
+                        <button
+                          onClick={handleBatchReconciliation}
+                          disabled={!canBatchReconcile}
+                          className={`relative px-8 py-4 sm:px-12 sm:py-5 rounded-xl font-semibold text-lg transition-all duration-300 transform ${
+                            canBatchReconcile
+                              ? 'bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white shadow-lg hover:shadow-xl hover:scale-105 active:scale-95'
+                              : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                          }`}
+                        >
+                          {isProcessing ? (
+                            <div className="flex items-center space-x-3">
+                              <LoadingSpinner size="sm" />
+                              <span>Processing Batch...</span>
+                            </div>
+                          ) : (
+                            `Run Batch Reconciliation (${filePairs.length} pairs)`
+                          )}
+                        </button>
+                        
+                        {!canBatchReconcile && filePairs.length === 0 && !isProcessing && (
+                          <p className="text-sm text-gray-500 bg-gray-50 px-4 py-2 rounded-lg border">
+                            Please create file pairs to run batch reconciliation
+                          </p>
+                        )}
+                      </div>
+                    </section>
+                  )}
+                </>
+              )}
+
+              {/* Batch Results */}
+              {(batchResult || (isProcessing && batchProgress)) && (
+                <section className="space-y-8 sm:space-y-12">
+                  <BatchResults
+                    result={batchResult || {
+                      filePairs,
+                      aggregateStats: {
+                        totalFilePairs: filePairs.length,
+                        successfulPairs: 0,
+                        failedPairs: 0,
+                        totalTransactionsInternal: 0,
+                        totalTransactionsProvider: 0,
+                        totalMatched: 0,
+                        totalInternalOnly: 0,
+                        totalProviderOnly: 0,
+                        overallMatchRate: 0,
+                        averageProcessingTime: 0
+                      },
+                      processedAt: new Date(),
+                      processingTimeMs: 0
+                    }}
+                    isProcessing={isProcessing}
+                    progress={batchProgress || undefined}
+                  />
+                </section>
+              )}
+            </>
           )}
 
-          {/* Welcome State */}
-          {!internalFile && !providerFile && (
+          {/* Welcome State - when no mode selected and no files */}
+          {!internalFile && !providerFile && filePairs.length === 0 && !batchResult && (
             <section className="text-center py-12 sm:py-16 lg:py-24">
               <div className="bg-white rounded-2xl sm:rounded-3xl p-8 sm:p-12 lg:p-16 shadow-sm border border-gray-200 max-w-4xl mx-auto">
                 <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 sm:p-8 mb-8">
@@ -205,7 +462,7 @@ function App() {
                   Welcome to the Reconciliation Tool
                 </h3>
                 <p className="text-lg sm:text-xl text-gray-600 mb-8 sm:mb-12 leading-relaxed max-w-2xl mx-auto">
-                  Upload your internal system export and provider statement files to identify transaction discrepancies with precision and ease.
+                  Choose your processing mode above to get started with transaction reconciliation.
                 </p>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-3xl mx-auto">

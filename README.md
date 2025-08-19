@@ -86,6 +86,8 @@ Screenshot showing the reconciliation output:
 
 The Mini Reconciliation Tool now includes powerful batch processing capabilities for handling multiple file pairs efficiently. This feature is perfect for organizations that need to process large volumes of reconciliation data regularly.
 
+![Upload Interface for the Mini Reconciliation Tool.](screenshots/batch.png)
+
 ### How Batch Processing Works
 
 #### 1. Mode Selection

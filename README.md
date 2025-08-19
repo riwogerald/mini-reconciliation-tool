@@ -2,7 +2,7 @@
 
 ![Mini Reconciliation Tool](https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1200&h=400&fit=crop)
 
-A modern, web-based reconciliation tool that compares transaction data between internal systems and payment processors to identify discrepancies, ensuring financial accuracy and compliance.
+A modern, web-based reconciliation tool that compares transaction data between internal systems and payment processors to identify discrepancies, ensuring financial accuracy and compliance. Now with **powerful batch processing capabilities** for handling multiple file pairs simultaneously!
 
 ## You can test the App here: [https://mini-recon-tool.netlify.app/](https://mini-recon-tool.netlify.app/)
 
@@ -14,12 +14,23 @@ The Mini Reconciliation Tool streamlines the process of comparing transaction fi
 
 ### Key Features
 
+#### Core Reconciliation Features
 - **🔄 Smart Transaction Matching** - Automatically matches transactions by reference ID with intelligent algorithms
 - **📊 Real-time Discrepancy Detection** - Identifies amount, status, and date mismatches with visual highlighting
 - **📈 Professional Reporting** - Comprehensive summary dashboard with key metrics and statistics
 - **💾 Export Capabilities** - Download detailed reports in CSV format for each category
 - **📱 Responsive Design** - Works seamlessly across desktop, tablet, and mobile devices
 - **🚀 Client-side Processing** - No server required, all processing happens in your browser for maximum security
+
+#### 🆕 NEW: Batch Processing Features
+- **📁 Multi-File Upload** - Upload multiple internal and provider files simultaneously
+- **🔗 File Pairing Interface** - Intuitive drag-and-drop interface for creating file pairs
+- **⚡ Batch Reconciliation** - Process multiple file pairs with queue management
+- **📊 Aggregate Reporting** - Combined statistics and insights across all processed pairs
+- **📈 Progress Tracking** - Real-time progress updates during batch processing
+- **📦 Bulk Export** - Export all results in a comprehensive report bundle
+- **🎯 Individual Results** - Expandable detailed view for each file pair
+- **🔄 Mode Switching** - Seamlessly switch between single-file and batch processing
 
 ## 🛠️ Technology Stack
 
@@ -70,6 +81,74 @@ Screenshot showing the reconciliation output:
 - Export each category to CSV with timestamped filenames
 - Search and pagination for large datasets
 - Detailed mismatch analysis with field-level comparisons
+
+## 🆕 Batch Processing Mode
+
+The Mini Reconciliation Tool now includes powerful batch processing capabilities for handling multiple file pairs efficiently. This feature is perfect for organizations that need to process large volumes of reconciliation data regularly.
+
+### How Batch Processing Works
+
+#### 1. Mode Selection
+- Choose between **Single File Mode** (traditional one-to-one comparison) or **Batch Processing Mode**
+- Easy toggle between modes with preserved functionality
+- Contextual UI that adapts to your selected processing method
+
+#### 2. Multi-File Upload
+- **Drag & Drop Multiple Files**: Upload multiple CSV files simultaneously
+- **Separate Upload Areas**: Distinct zones for internal system files and provider statements
+- **File Management**: Add, remove, and organize files before processing
+- **Real-time Validation**: Instant feedback on file format and content
+
+#### 3. File Pairing Interface
+- **Visual Pairing**: Intuitive interface for creating file pairs
+- **Flexible Matching**: Pair any internal file with any provider file
+- **Pair Management**: Add, remove, and modify file pairs as needed
+- **Validation**: Ensure all pairs are valid before processing
+
+#### 4. Batch Processing Engine
+- **Queue Management**: Process multiple file pairs in sequence
+- **Progress Tracking**: Real-time updates showing current progress
+- **Error Handling**: Graceful handling of individual pair failures
+- **Performance Optimization**: Efficient processing with minimal browser impact
+
+#### 5. Aggregate Results Dashboard
+- **Combined Statistics**: Overall metrics across all processed pairs
+- **Success Rate Tracking**: Monitor processing success and failure rates
+- **Individual Pair Results**: Expandable sections for detailed pair analysis
+- **Visual Progress**: Progress bars and status indicators
+
+#### 6. Comprehensive Export Options
+- **Bulk Export**: Download all results in a single operation
+- **Summary Reports**: Text-based aggregate statistics and insights
+- **Individual CSVs**: Separate files for each pair's reconciliation results
+- **Timestamped Files**: Organized exports with clear naming conventions
+
+### Batch Processing Benefits
+
+✅ **Efficiency**: Process multiple reconciliations simultaneously  
+✅ **Time Savings**: Reduce manual file handling and processing time  
+✅ **Consistency**: Standardized processing across all file pairs  
+✅ **Visibility**: Clear overview of processing status and results  
+✅ **Scalability**: Handle larger reconciliation workloads  
+✅ **Organization**: Structured results with comprehensive reporting  
+
+### When to Use Batch Processing
+
+- **Regular Reconciliation Cycles**: Monthly, weekly, or daily reconciliations
+- **Multiple Business Units**: Different divisions or departments
+- **Multiple Payment Processors**: Various provider statements to reconcile
+- **Historical Data Processing**: Batch processing of past periods
+- **Large Data Volumes**: When dealing with numerous transaction files
+
+### Batch Processing Workflow
+
+1. **Select Batch Mode** from the main interface
+2. **Upload Files** - Add multiple internal and provider files
+3. **Create Pairs** - Use the pairing interface to match files
+4. **Start Processing** - Run batch reconciliation on all pairs
+5. **Monitor Progress** - Watch real-time progress updates
+6. **Review Results** - Examine aggregate and individual results
+7. **Export Reports** - Download comprehensive result bundles
 
 ## 🚀 Getting Started
 
@@ -139,11 +218,22 @@ The `test-data/` directory contains comprehensive CSV files for various testing 
 
 ### Testing Scenarios
 
+#### Single File Mode Testing
 1. **Basic Functionality**: Use `internal-system.csv` and `provider-statement.csv`
 2. **Large Dataset Testing**: Use the large CSV files to test pagination and performance
 3. **Edge Case Testing**: Use edge-case files to test various data formats
 4. **Error Handling**: Use invalid files to test error handling
 5. **Performance Testing**: Use the PowerShell script to generate large datasets
+
+#### Batch Processing Mode Testing
+6. **Multi-File Upload**: Test uploading multiple files in each category
+7. **File Pairing**: Create various file pair combinations and test validation
+8. **Batch Processing**: Process multiple pairs simultaneously
+9. **Progress Tracking**: Monitor real-time progress during batch operations
+10. **Aggregate Reporting**: Verify combined statistics across multiple pairs
+11. **Bulk Export**: Test comprehensive export functionality
+12. **Error Recovery**: Test batch processing with some failing pairs
+13. **Large Batch Operations**: Process numerous file pairs for performance testing
 
 ## 📊 CSV File Requirements
 

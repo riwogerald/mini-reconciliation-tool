@@ -2,7 +2,7 @@
 
 ![Mini Reconciliation Tool](https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1200&h=400&fit=crop)
 
-A modern, web-based reconciliation tool that compares transaction data between internal systems and payment processors to identify discrepancies, ensuring financial accuracy and compliance. Now with **powerful batch processing capabilities** for handling multiple file pairs simultaneously!
+A modern, web-based reconciliation tool that compares transaction data between internal systems and payment processors to identify discrepancies, ensuring financial accuracy and compliance. Features **powerful batch processing capabilities** for handling multiple file pairs simultaneously, plus an **Advanced Analytics Dashboard** with intelligent insights, interactive charts, and professional PDF reporting!
 
 ## You can test the App here: [https://mini-recon-tool.netlify.app/](https://mini-recon-tool.netlify.app/)
 
@@ -38,6 +38,9 @@ The Mini Reconciliation Tool streamlines the process of comparing transaction fi
 - **Build Tool**: Vite with hot module replacement
 - **Styling**: Tailwind CSS with responsive design
 - **CSV Processing**: Papa Parse library for robust file handling
+- **Data Visualization**: Chart.js with React Chart.js 2 for interactive charts
+- **PDF Generation**: jsPDF with html2canvas for professional reports
+- **Date Processing**: date-fns for robust date manipulation
 - **Icons**: Lucide React icon library
 - **Development**: ESLint for code quality
 
@@ -152,6 +155,89 @@ The Mini Reconciliation Tool now includes powerful batch processing capabilities
 6. **Review Results** - Examine aggregate and individual results
 7. **Export Reports** - Download comprehensive result bundles
 
+## 🎯 NEWEST: Advanced Analytics Dashboard
+
+The Mini Reconciliation Tool now features a comprehensive **Analytics Dashboard** that transforms reconciliation data into actionable business intelligence. This advanced feature provides intelligent insights, interactive visualizations, and professional reporting capabilities.
+
+### 📊 Analytics Dashboard Features
+
+#### 🧠 Smart Insights Engine
+- **Automated Analysis** - AI-powered insights that identify patterns, anomalies, and trends
+- **Performance Scoring** - Match rate analysis with historical comparisons
+- **Risk Detection** - Automatic flagging of unusual discrepancies or processing failures
+- **Trend Analysis** - Historical performance tracking with deviation alerts
+- **Executive Summaries** - Auto-generated plain-text insights for stakeholders
+
+#### 📈 Interactive Data Visualizations
+- **Match Rate Trends** - Line charts showing reconciliation performance over time
+- **Transaction Volume Analysis** - Dual-axis charts comparing volumes and match rates
+- **Amount Distribution** - Bar charts showing transaction value patterns
+- **Status Breakdown** - Pie charts with transaction status distribution and averages
+- **Mismatch Patterns** - Analysis of common field discrepancies and frequencies
+
+#### 🎨 Professional Reporting
+- **PDF Export** - Comprehensive reports with charts, insights, and professional formatting
+- **Executive Dashboards** - High-level summaries perfect for management presentations
+- **Historical Analysis** - Trend reports comparing current vs. historical performance
+- **Detailed Breakdowns** - In-depth analysis of amount distributions and status patterns
+
+#### 📚 Historical Data Management
+- **Automatic Persistence** - All reconciliation sessions automatically saved locally
+- **Time Range Filtering** - Analyze data across 7 days, 30 days, 90 days, or all time
+- **Performance Metrics** - Track average processing times, match rates, and volumes
+- **Data Export/Import** - Backup and restore historical reconciliation data
+- **Storage Management** - Monitor local storage usage with cleanup options
+
+### 🔍 How Analytics Works
+
+1. **Automatic Data Collection**
+   - Every reconciliation session is automatically saved to browser local storage
+   - Performance metrics (processing time, match rates) are tracked
+   - Historical trends are calculated across multiple sessions
+
+2. **Intelligent Analysis**
+   - Smart algorithms analyze patterns in transaction data
+   - Anomaly detection identifies unusual match rate deviations (>10% threshold)
+   - Historical comparisons provide context for current performance
+
+3. **Interactive Dashboard**
+   - Access via "View Advanced Analytics" button after any reconciliation
+   - Real-time chart interactions with hover details and legends
+   - Time range filters to focus analysis on specific periods
+
+4. **Professional Export**
+   - One-click PDF generation with comprehensive analytics
+   - Charts are captured as high-resolution images
+   - Executive summaries and detailed breakdowns included
+
+### 🎯 Analytics Benefits
+
+✅ **Business Intelligence** - Transform raw data into actionable insights  
+✅ **Trend Identification** - Spot patterns and anomalies early  
+✅ **Performance Tracking** - Monitor reconciliation efficiency over time  
+✅ **Executive Reporting** - Professional reports for stakeholder communication  
+✅ **Data-Driven Decisions** - Evidence-based process improvements  
+✅ **Historical Context** - Understand performance trends and variations  
+
+### 📊 Analytics Workflow
+
+1. **Run Reconciliation** - Process single files or batches as usual
+2. **Access Analytics** - Click "View Advanced Analytics" button
+3. **Explore Insights** - Review automated insights and recommendations
+4. **Analyze Charts** - Interact with visualizations and trends
+5. **Adjust Timeframes** - Filter data by 7d/30d/90d/all periods
+6. **Export Reports** - Generate professional PDF reports
+7. **Track Progress** - Monitor improvements over multiple sessions
+
+### 🛠️ Analytics Technology Stack
+
+- **Data Visualization**: Chart.js with React Chart.js 2
+- **PDF Generation**: jsPDF with html2canvas for chart capture
+- **Date Processing**: date-fns for robust date manipulation
+- **Local Storage**: Browser localStorage with JSON serialization
+- **Analytics Engine**: Custom algorithms for insight generation
+- **TypeScript**: Full type safety for analytics data structures
+
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -236,6 +322,16 @@ The `test-data/` directory contains comprehensive CSV files for various testing 
 11. **Bulk Export**: Test comprehensive export functionality
 12. **Error Recovery**: Test batch processing with some failing pairs
 13. **Large Batch Operations**: Process numerous file pairs for performance testing
+
+#### Advanced Analytics Testing
+14. **Historical Data Generation**: Run multiple reconciliations to build historical trends
+15. **Analytics Dashboard**: Test "View Advanced Analytics" button and dashboard functionality
+16. **Chart Interactions**: Hover over charts, test time range filters (7d/30d/90d/all)
+17. **Insight Generation**: Verify automated insights appear for different scenarios
+18. **PDF Export**: Test comprehensive analytics PDF report generation
+19. **Storage Management**: Test data export/import and storage statistics
+20. **Performance Analytics**: Monitor processing time tracking and performance metrics
+21. **Anomaly Detection**: Create scenarios with unusual match rates to test alerts
 
 ## 📊 CSV File Requirements
 

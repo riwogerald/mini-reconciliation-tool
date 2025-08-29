@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BarChart3, Upload, RefreshCw, Layers, FileCheck } from 'lucide-react';
+import { BarChart3, Upload, RefreshCw, Layers, FileCheck, TrendingUp } from 'lucide-react';
 import { FileUpload } from './components/FileUpload';
 import { BatchFileUpload } from './components/BatchFileUpload';
 import { TransactionTable } from './components/TransactionTable';
@@ -7,6 +7,7 @@ import { ReconciliationSummary } from './components/ReconciliationSummary';
 import { BatchResults } from './components/BatchResults';
 import { LoadingSpinner } from './components/LoadingSpinner';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { AnalyticsDashboard } from './components/AnalyticsDashboard';
 import { 
   ParsedFile, 
   ReconciliationResult, 
@@ -20,6 +21,9 @@ import {
   processBatchReconciliation, 
   validateFilePairs 
 } from './utils/batchReconciliation';
+import { StorageService } from './utils/storageService';
+import { PDFReportGenerator } from './utils/pdfReportGenerator';
+import { AnalyticsData } from './types/analytics';
 import { CheckCircle, AlertTriangle, XCircle } from 'lucide-react';
 
 function App() {
@@ -43,6 +47,23 @@ function App() {
     currentPair?: FilePair;
   } | null>(null);
 
+  // Analytics state
+  const [currentTab, setCurrentTab] = useState<'reconciliation' | 'analytics'>('reconciliation');
+  const [showAnalytics, setShowAnalytics] = useState(false);
+
+  // PDF Export handler
+  const handleExportPDF = async (analyticsData: AnalyticsData) => {
+    try {
+      const currentResult = reconciliationResult || batchResult;
+      if (!currentResult) return;
+      
+      await PDFReportGenerator.generateAnalyticsReport(analyticsData, currentResult);
+    } catch (error) {
+      console.error('Failed to export PDF:', error);
+      setError('Failed to generate PDF report. Please try again.');
+    }
+  };
+
   const handleReconciliation = async () => {
     if (!internalFile || !providerFile) return;
 
@@ -53,8 +74,22 @@ function App() {
       // Add realistic processing delay for better UX
       await new Promise(resolve => setTimeout(resolve, 800));
       
-      const result = reconcileTransactions(internalFile.data, providerFile.data);
+      const { result, processingTimeMs } = reconcileTransactions(internalFile.data, providerFile.data);
       setReconciliationResult(result);
+      
+      // Save to historical data
+      StorageService.saveReconciliationResult(
+        result,
+        'single',
+        {
+          internalFileName: internalFile.name,
+          providerFileName: providerFile.name,
+          processingTimeMs
+        }
+      );
+      
+      // Show analytics option
+      setShowAnalytics(true);
     } catch (error) {
       console.error('Reconciliation error:', error);
       setError(error instanceof Error ? error.message : 'An unexpected error occurred during reconciliation');
@@ -92,6 +127,19 @@ function App() {
       });
 
       setBatchResult(result);
+      
+      // Save to historical data
+      StorageService.saveReconciliationResult(
+        result,
+        'batch',
+        {
+          filePairCount: filePairs.length,
+          processingTimeMs: result.processingTimeMs
+        }
+      );
+      
+      // Show analytics option
+      setShowAnalytics(true);
     } catch (error) {
       console.error('Batch reconciliation error:', error);
       setError(error instanceof Error ? error.message : 'An unexpected error occurred during batch reconciliation');
@@ -351,6 +399,36 @@ function App() {
                       colorScheme="red"
                     />
                   </div>
+                  
+                  {/* Analytics Button and Dashboard */}
+                  {showAnalytics && (
+                    <div className="text-center mt-8">
+                      {!currentTab || currentTab === 'reconciliation' ? (
+                        <button
+                          onClick={() => setCurrentTab('analytics')}
+                          className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-lg"
+                        >
+                          <TrendingUp className="w-5 h-5" />
+                          <span>View Advanced Analytics</span>
+                        </button>
+                      ) : (
+                        <div className="space-y-8">
+                          <div className="flex justify-center">
+                            <button
+                              onClick={() => setCurrentTab('reconciliation')}
+                              className="inline-flex items-center space-x-2 px-4 py-2 text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50"
+                            >
+                              ← Back to Results
+                            </button>
+                          </div>
+                          <AnalyticsDashboard
+                            currentResult={reconciliationResult}
+                            onExportPDF={handleExportPDF}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </section>
               )}
             </>

@@ -1,9 +1,13 @@
 import { Transaction, ReconciliationResult, TransactionMatch, FieldMismatch } from '../types/transaction';
 
+/**
+ * Enhanced reconciliation function with performance tracking
+ */
 export const reconcileTransactions = (
   internalData: Transaction[],
   providerData: Transaction[]
-): ReconciliationResult => {
+): { result: ReconciliationResult; processingTimeMs: number } => {
+  const startTime = performance.now();
   const matched: TransactionMatch[] = [];
   const internalOnly: Transaction[] = [];
   const providerOnly: Transaction[] = [];
@@ -57,11 +61,19 @@ export const reconcileTransactions = (
     matchRate: internalData.length > 0 ? (matched.length / internalData.length) * 100 : 0
   };
 
-  return {
+  const endTime = performance.now();
+  const processingTimeMs = endTime - startTime;
+
+  const result: ReconciliationResult = {
     matched,
     internalOnly,
     providerOnly,
     stats
+  };
+
+  return {
+    result,
+    processingTimeMs
   };
 };
 

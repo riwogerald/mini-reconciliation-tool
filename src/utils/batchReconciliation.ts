@@ -30,7 +30,7 @@ export const processBatchReconciliation = async (
       await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 1000));
 
       // Process the reconciliation
-      const result = reconcileTransactions(
+      const { result, processingTimeMs } = reconcileTransactions(
         pair.internalFile.data,
         pair.providerFile.data
       );

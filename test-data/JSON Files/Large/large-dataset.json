@@ -1,0 +1,99 @@
+{
+  "transactions": [
+    {
+      "transaction_reference": "TXN001",
+      "amount": 100.50,
+      "status": "completed",
+      "date": "2024-01-01",
+      "description": "Transaction 001",
+      "category": "online",
+      "merchant": "Store A"
+    },
+    {
+      "transaction_reference": "TXN002",
+      "amount": 250.75,
+      "status": "pending",
+      "date": "2024-01-02",
+      "description": "Transaction 002",
+      "category": "retail",
+      "merchant": "Store B"
+    },
+    {
+      "transaction_reference": "TXN003",
+      "amount": 75.25,
+      "status": "completed",
+      "date": "2024-01-03",
+      "description": "Transaction 003",
+      "category": "service",
+      "merchant": "Service Provider"
+    },
+    {
+      "transaction_reference": "TXN004",
+      "amount": 500.00,
+      "status": "completed",
+      "date": "2024-01-04",
+      "description": "Transaction 004",
+      "category": "online",
+      "merchant": "Store C"
+    },
+    {
+      "transaction_reference": "TXN005",
+      "amount": 25.99,
+      "status": "failed",
+      "date": "2024-01-05",
+      "description": "Transaction 005",
+      "category": "retail",
+      "merchant": "Store A"
+    },
+    {
+      "transaction_reference": "TXN006",
+      "amount": 150.00,
+      "status": "completed",
+      "date": "2024-01-06",
+      "description": "Transaction 006",
+      "category": "service",
+      "merchant": "Service Provider"
+    },
+    {
+      "transaction_reference": "TXN007",
+      "amount": 33.75,
+      "status": "completed",
+      "date": "2024-01-07",
+      "description": "Transaction 007",
+      "category": "online",
+      "merchant": "Store B"
+    },
+    {
+      "transaction_reference": "TXN008",
+      "amount": 45.50,
+      "status": "pending",
+      "date": "2024-01-08",
+      "description": "Transaction 008",
+      "category": "retail",
+      "merchant": "Store C"
+    },
+    {
+      "transaction_reference": "TXN009",
+      "amount": 89.99,
+      "status": "completed",
+      "date": "2024-01-09",
+      "description": "Transaction 009",
+      "category": "online",
+      "merchant": "Store A"
+    },
+    {
+      "transaction_reference": "TXN010",
+      "amount": 199.50,
+      "status": "completed",
+      "date": "2024-01-10",
+      "description": "Transaction 010",
+      "category": "service",
+      "merchant": "Service Provider"
+    }
+  ],
+  "metadata": {
+    "generated_at": "2024-01-15T10:00:00Z",
+    "total_count": 10,
+    "file_version": "1.0"
+  }
+}

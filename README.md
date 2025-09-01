@@ -2,7 +2,7 @@
 
 ![Mini Reconciliation Tool](https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1200&h=400&fit=crop)
 
-A modern, web-based reconciliation tool that compares transaction data between internal systems and payment processors to identify discrepancies, ensuring financial accuracy and compliance. Features **powerful batch processing capabilities** for handling multiple file pairs simultaneously, plus an **Advanced Analytics Dashboard** with intelligent insights, interactive charts, and professional PDF reporting!
+A modern, web-based reconciliation tool that compares transaction data between internal systems and payment processors to identify discrepancies, ensuring financial accuracy and compliance. Features **multi-format file support** (CSV, Excel, JSON, TSV), **powerful batch processing capabilities** for handling multiple file pairs simultaneously, plus an **Advanced Analytics Dashboard** with intelligent insights, interactive charts, and professional PDF reporting!
 
 ## You can test the App here: [https://mini-recon-tool.netlify.app/](https://mini-recon-tool.netlify.app/)
 
@@ -22,6 +22,14 @@ The Mini Reconciliation Tool streamlines the process of comparing transaction fi
 - **📱 Responsive Design** - Works seamlessly across desktop, tablet, and mobile devices
 - **🚀 Client-side Processing** - No server required, all processing happens in your browser for maximum security
 
+#### 🆕 Multi-Format Support
+- **📄 CSV Files** - Comma-separated values (.csv) with robust parsing
+- **📊 Excel Files** - Microsoft Excel spreadsheets (.xlsx, .xls) with full worksheet support
+- **🔗 JSON Files** - JavaScript Object Notation (.json) with flexible structure handling
+- **📋 TSV Files** - Tab-separated values (.tsv, .tab) with proper delimiter handling
+- **🔄 Cross-Format Compatibility** - Mix and match different formats (e.g., CSV internal + Excel provider)
+- **🎯 Auto-Detection** - Automatic format recognition and appropriate processing
+
 #### 🆕 Batch Processing Features
 - **📁 Multi-File Upload** - Upload multiple internal and provider files simultaneously
 - **🔗 File Pairing Interface** - Intuitive drag-and-drop interface for creating file pairs
@@ -37,7 +45,10 @@ The Mini Reconciliation Tool streamlines the process of comparing transaction fi
 - **Frontend Framework**: React 18 with TypeScript
 - **Build Tool**: Vite with hot module replacement
 - **Styling**: Tailwind CSS with responsive design
-- **CSV Processing**: Papa Parse library for robust file handling
+- **File Processing**: 
+  - Papa Parse for CSV/TSV parsing
+  - xlsx library for Excel file processing
+  - Native JSON parsing for JSON files
 - **Data Visualization**: Chart.js with React Chart.js 2 for interactive charts
 - **PDF Generation**: jsPDF with html2canvas for professional reports
 - **Date Processing**: date-fns for robust date manipulation
@@ -47,8 +58,9 @@ The Mini Reconciliation Tool streamlines the process of comparing transaction fi
 ## 📋 How It Works
 
 ### 1. File Upload
-- Drag and drop or click to upload CSV files (max 10MB)
-- Supports internal system exports and provider statements
+- Drag and drop or click to upload files in supported formats (max 10MB)
+- Supports CSV, Excel (.xlsx, .xls), JSON, and TSV (.tsv, .tab) files
+- Auto-detects file format and uses appropriate parser
 - Real-time validation and error handling
 - Automatic detection of required columns
 
@@ -57,8 +69,9 @@ Screenshots Showing Uploads:
 ![Upload Interface for the Mini Reconciliation Tool.](screenshots/upload2.png)
 
 ### 2. Data Processing
-- Parses CSV files with header detection
-- Validates transaction_reference column presence
+- Parses files using format-specific processors (CSV, Excel, JSON, TSV)
+- Normalizes column names across all formats (spaces → underscores, lowercase)
+- Validates transaction_reference column/field presence
 - Cleans and normalizes data for comparison
 - Handles various amount formats and currencies
 
@@ -270,15 +283,17 @@ The Mini Reconciliation Tool now features a comprehensive **Analytics Dashboard*
 
 ### Using the Tool
 
-1. **Prepare your CSV files** with the following requirements:
-   - Must contain a `transaction_reference` column
+1. **Prepare your files** with the following requirements:
+   - Must contain a `transaction_reference` column/field
    - Recommended columns: `amount`, `status`, `date`, `description`
-   - UTF-8 encoding
-   - Headers in the first row
+   - Supported formats: CSV, Excel (.xlsx, .xls), JSON, TSV (.tsv, .tab)
+   - UTF-8 encoding (for text-based formats)
+   - Headers in the first row (CSV/TSV) or proper field names (JSON/Excel)
 
 2. **Upload files**:
-   - Upload your internal system export
-   - Upload your provider statement
+   - Upload your internal system export (any supported format)
+   - Upload your provider statement (any supported format)
+   - Files can be in different formats (e.g., CSV + Excel)
 
 3. **Run reconciliation** and review results
 
@@ -286,23 +301,26 @@ The Mini Reconciliation Tool now features a comprehensive **Analytics Dashboard*
 
 ## 🧪 Testing with Sample Data
 
-The `test-data/` directory contains comprehensive CSV files for various testing scenarios:
+The `test-data/` directory contains comprehensive test files organized by format and complexity:
 
-- **Basic Test Files:**
-  - `internal-system.csv` - 8 sample internal transactions
-  - `provider-statement.csv` - 7 sample provider transactions
-- **Extended Datasets:**
-  - `large-internal-system.csv` - 55 transactions for extended testing
-  - `large-provider-statement.csv` - 50 transactions with varied scenarios
-- **Edge Case Files:**
-  - `edge-case-internal.csv` - Edge cases with 27 transactions
-  - `edge-case-provider.csv` - Edge cases with 31 transactions
-- **Error Testing Files:**
-  - `invalid-missing-columns.csv` - Test for invalid columns
-  - `empty-file.csv` - Empty dataset
-- **Performance Test Files:**
-  - `performance-test-internal.csv` - Structured data for performance testing
-  - `generate-large-dataset.ps1` - PowerShell script for generating large data
+### 📁 Organized by Format
+- **CSV Files/**: Traditional comma-separated files
+- **Excel Files/**: Microsoft Excel spreadsheets (.xlsx, .xls)
+- **JSON Files/**: JavaScript Object Notation files
+- **TSV Files/**: Tab-separated values files (.tsv, .tab)
+
+### 📊 Organized by Complexity
+- **Simple/**: Basic files for initial testing (5-8 transactions)
+- **Large/**: Extended datasets for performance testing (15-55 transactions)
+- **Edge Cases/**: Files with data quality issues and formatting problems
+- **Performance/**: Structured files for benchmarking
+
+### 🗺 Key Test Files
+- **CSV Files/Simple/internal-system.csv** - 8 basic transactions
+- **JSON Files/Simple/provider-statement.json** - 7 transactions in JSON format
+- **Excel Files/Simple/internal-system.xlsx** - 5 transactions in Excel format
+- **TSV Files/Simple/internal-system.tsv** - 8 transactions in TSV format
+- **generate-large-dataset.ps1** - PowerShell script for custom datasets
 
 ### Testing Scenarios
 
@@ -363,7 +381,7 @@ TXN003,75.25,failed,2024-01-16,Refund request
 
 - **Client-side only**: No server-side processing or data persistence
 - **File size limit**: 10MB maximum per file (~50,000 transactions)
-- **CSV format only**: Does not support Excel, JSON, or other formats
+- **Excel limitations**: Reads first worksheet only (for multi-sheet Excel files)
 - **Exact matching**: Uses exact reference matching (no fuzzy matching)
 - **Browser memory**: Large files may impact browser performance
 

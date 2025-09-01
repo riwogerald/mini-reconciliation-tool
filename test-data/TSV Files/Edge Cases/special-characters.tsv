@@ -1,0 +1,7 @@
+transaction_reference	amount	status	date	description
+TXN-001	$100.50	completed	2024-01-01	Payment with special chars: @#$%
+TXN/002	250,75	pending	01/02/2024	Description with 	 tabs and 
+ newlines
+TXN_003		completed	2024-01-03	Empty amount field
+TXN.004	75.25	COMPLETED	2024-01-04	Mixed case status
+TXN#005	-50.00	refunded	2024-01-05	Negative amount (refund)

@@ -1,0 +1,29 @@
+[
+  {
+    "amount": 100.50,
+    "status": "completed",
+    "date": "2024-01-01",
+    "description": "Missing transaction_reference field"
+  },
+  {
+    "transaction_reference": "",
+    "amount": 250.00,
+    "status": "completed",
+    "date": "2024-01-02",
+    "description": "Empty transaction_reference"
+  },
+  {
+    "transaction_reference": null,
+    "amount": 75.25,
+    "status": "pending",
+    "date": "2024-01-03",
+    "description": "Null transaction_reference"
+  },
+  {
+    "transaction_reference": "TXN001",
+    "amount": 500.00,
+    "status": "completed",
+    "date": "2024-01-04",
+    "description": "Valid transaction for comparison"
+  }
+]

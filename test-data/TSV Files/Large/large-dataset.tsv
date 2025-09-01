@@ -1,0 +1,16 @@
+transaction_reference	amount	status	date	description	category	merchant
+TXN001	100.50	completed	2024-01-01	Large dataset transaction 001	online	MegaStore
+TXN002	250.75	pending	2024-01-02	Large dataset transaction 002	retail	SuperMarket
+TXN003	75.25	completed	2024-01-03	Large dataset transaction 003	service	TechSupport
+TXN004	500.00	completed	2024-01-04	Large dataset transaction 004	online	MegaStore
+TXN005	25.99	failed	2024-01-05	Large dataset transaction 005	retail	SuperMarket
+TXN006	150.00	completed	2024-01-06	Large dataset transaction 006	service	TechSupport
+TXN007	33.75	completed	2024-01-07	Large dataset transaction 007	online	MegaStore
+TXN008	45.50	pending	2024-01-08	Large dataset transaction 008	retail	SuperMarket
+TXN009	89.99	completed	2024-01-09	Large dataset transaction 009	service	TechSupport
+TXN010	199.50	completed	2024-01-10	Large dataset transaction 010	online	MegaStore
+TXN011	325.00	pending	2024-01-11	Large dataset transaction 011	retail	SuperMarket
+TXN012	67.80	completed	2024-01-12	Large dataset transaction 012	service	TechSupport
+TXN013	445.25	failed	2024-01-13	Large dataset transaction 013	online	MegaStore
+TXN014	178.90	completed	2024-01-14	Large dataset transaction 014	retail	SuperMarket
+TXN015	234.50	completed	2024-01-15	Large dataset transaction 015	service	TechSupport

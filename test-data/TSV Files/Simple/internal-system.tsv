@@ -1,0 +1,9 @@
+transaction_reference	amount	status	date	description
+TXN001	100.50	completed	2024-01-01	Online payment
+TXN002	250.00	completed	2024-01-02	Store purchase
+TXN003	75.25	pending	2024-01-03	Refund request
+TXN004	500.00	completed	2024-01-04	Large transaction
+TXN005	25.99	failed	2024-01-05	Small item purchase
+TXN006	150.00	completed	2024-01-06	Service payment
+TXN007	33.75	completed	2024-01-07	Small purchase
+TXN008	45.50	pending	2024-01-08	Processing payment

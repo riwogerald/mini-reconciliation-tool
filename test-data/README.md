@@ -1,100 +1,133 @@
-# Testing the Mini Reconciliation Tool
+# Test Data for Mini Reconciliation Tool
 
-## Test Files Overview
+## Overview
 
-This directory contains comprehensive test data for validating the Mini Reconciliation Tool across various scenarios.
+This directory contains comprehensive test data for validating the Mini Reconciliation Tool across various file formats and scenarios. The test data is organized by file format and complexity level to support thorough testing of all features.
 
 ## Supported File Formats
 
-The Mini Reconciliation Tool now supports multiple file formats:
+The Mini Reconciliation Tool supports the following file formats:
 
-- **CSV** (.csv) - Comma-Separated Values
-- **TSV** (.tsv, .tab) - Tab-Separated Values  
-- **Excel** (.xlsx, .xls) - Microsoft Excel Spreadsheets
-- **JSON** (.json) - JavaScript Object Notation
+| Format | Extensions | Description |
+|--------|------------|-------------|
+| **CSV** | `.csv` | Comma-Separated Values |
+| **Excel** | `.xlsx`, `.xls` | Microsoft Excel Spreadsheets |
+| **JSON** | `.json` | JavaScript Object Notation |
+| **TSV** | `.tsv`, `.tab` | Tab-Separated Values |
 
-All formats must contain a `transaction_reference` column/field and can be mixed and matched (e.g., upload a CSV internal file with an Excel provider file).
+All formats must contain a `transaction_reference` column/field. Files can be mixed and matched (e.g., CSV internal file with Excel provider file).
 
-## Basic Test Files
+## Directory Structure
 
-### 1. internal-system.csv
+```
+test-data/
+├── CSV Files/
+│   ├── Simple/           # Basic CSV files for initial testing
+│   ├── Large/            # Large datasets for performance testing
+│   ├── Edge Cases/       # Files with data quality issues
+│   └── Performance/      # Performance benchmarking files
+├── Excel Files/
+│   ├── Simple/           # Basic Excel files (.xlsx, .xls)
+│   ├── Large/            # Large Excel datasets
+│   └── Edge Cases/       # Excel files with formatting issues
+├── JSON Files/
+│   ├── Simple/           # Basic JSON transaction arrays
+│   ├── Large/            # Large JSON datasets with metadata
+│   └── Edge Cases/       # JSON files with nested structures
+├── TSV Files/
+│   ├── Simple/           # Basic tab-separated files (.tsv, .tab)
+│   ├── Large/            # Large TSV datasets
+│   └── Edge Cases/       # TSV files with special characters
+├── generate-large-dataset.ps1  # PowerShell script for custom datasets
+└── README.md             # This file
+```
+
+## File Categories
+
+### 📄 Simple Files
+Basic test files with clean data for initial validation:
 - **Purpose**: Basic functionality testing
-- **Size**: 8 transactions
-- **Content**: TXN001-TXN008
-- **Use Case**: Initial validation of core reconciliation features
+- **Size**: 5-8 transactions
+- **Content**: Clean, well-formatted data
+- **Use Case**: Initial validation of core features
 
-### 2. provider-statement.csv  
-- **Purpose**: Basic functionality testing
-- **Size**: 7 transactions  
-- **Content**: TXN001, TXN002, TXN004, TXN006, TXN007, TXN009, TXN010
-- **Use Case**: Partner file for basic reconciliation testing
+### 📊 Large Files  
+Larger datasets for performance and UI testing:
+- **Purpose**: Performance and scalability testing
+- **Size**: 15-55 transactions
+- **Content**: Realistic transaction volumes
+- **Use Case**: Test pagination, search, filtering, and performance
 
-## Extended Test Files
+### ⚠️ Edge Cases
+Files with data quality issues and edge cases:
+- **Purpose**: Robustness and error handling testing
+- **Size**: Varies
+- **Content**: Missing fields, special characters, formatting issues
+- **Use Case**: Validate error handling and data cleaning
 
-### 3. large-internal-system.csv
-- **Purpose**: Extended functionality and UI testing
-- **Size**: 55 transactions
-- **Content**: TXN001-TXN055 with varied amounts, dates, and statuses
-- **Use Case**: Test pagination, search, filtering, and larger dataset handling
+### 🚀 Performance
+Optimized files for benchmarking:
+- **Purpose**: Performance benchmarking
+- **Size**: 50+ transactions
+- **Content**: Structured data for consistent performance testing
+- **Use Case**: Baseline performance validation
 
-### 4. large-provider-statement.csv
-- **Purpose**: Extended functionality testing
-- **Size**: 50 transactions
-- **Content**: Mix of matched, mismatched, and provider-only transactions
-- **Use Case**: Partner file for extended reconciliation scenarios
+## Test File Details
 
-## Edge Case Test Files
+### CSV Files
 
-### 5. edge-case-internal.csv
-- **Purpose**: Data validation and edge case handling
-- **Size**: 27 transactions
-- **Content**: Various formatting issues, duplicates, empty fields
-- **Use Case**: Test robustness against problematic data
+#### Simple/
+- `internal-system.csv` - 8 transactions (TXN001-TXN008)
+- `provider-statement.csv` - 7 transactions with some matches
 
-### 6. edge-case-provider.csv
-- **Purpose**: Mismatch detection and data normalization
-- **Size**: 31 transactions
-- **Content**: Various mismatches, formatting corrections
-- **Use Case**: Validate mismatch detection and data handling
+#### Large/
+- `large-internal-system.csv` - 55 transactions with varied data
+- `large-provider-statement.csv` - 50 transactions for complex reconciliation
 
-## Multi-Format Test Files
+#### Edge Cases/
+- `edge-case-internal.csv` - 27 transactions with formatting issues
+- `edge-case-provider.csv` - 31 transactions with mismatches
+- `empty-file.csv` - Headers only, no data
+- `invalid-missing-columns.csv` - Invalid column structure
 
-### 7. sample-internal.json
-- **Purpose**: JSON format testing
-- **Size**: 3 transactions
-- **Content**: TXN-001 to TXN-003 in JSON format
-- **Use Case**: Test JSON file processing and parsing
+#### Performance/
+- `performance-test-internal.csv` - 50 structured transactions
 
-### 8. sample-provider.tsv
-- **Purpose**: TSV format testing  
-- **Size**: 3 transactions
-- **Content**: TXN-001, TXN-002, TXN-004 in tab-separated format
-- **Use Case**: Test TSV file processing and cross-format reconciliation
+### Excel Files
 
-## Error Testing Files
+#### Simple/
+- `internal-system.xlsx` - Basic Excel format with 5 transactions
+- `provider-statement.xlsx` - Provider data in Excel format
+- `internal-system.xls` - Legacy Excel format (.xls) support
 
-### 9. invalid-missing-columns.csv
-- **Purpose**: Validation error testing
-- **Content**: CSV with wrong column names
-- **Use Case**: Test error handling for invalid file formats
+#### Edge Cases/
+- `mixed-formats.xlsx` - Mixed case headers, currency symbols, empty fields
 
-### 10. empty-file.csv
-- **Purpose**: Edge case testing
-- **Content**: Headers only, no data rows
-- **Use Case**: Test handling of empty datasets
+### JSON Files
 
-## Performance Test Files
+#### Simple/
+- `sample-internal.json` - Basic JSON array with 3 transactions
+- `provider-statement.json` - Provider data in JSON format
 
-### 9. performance-test-internal.csv
-- **Purpose**: Basic performance testing
-- **Size**: 50 transactions
-- **Content**: Structured test data for performance validation
-- **Use Case**: Baseline performance testing
+#### Large/
+- `large-dataset.json` - 10 transactions with metadata wrapper
 
-### 10. generate-large-dataset.ps1
-- **Purpose**: Dynamic large dataset generation
-- **Capability**: Generate 1000+ transaction files
-- **Use Case**: Custom performance and stress testing
+#### Edge Cases/
+- `nested-structure.json` - JSON with nested data structure
+- `invalid-references.json` - Missing/null transaction references
+
+### TSV Files
+
+#### Simple/
+- `internal-system.tsv` - Tab-separated internal data
+- `provider-statement.tab` - Provider data with .tab extension
+- `sample-provider.tsv` - Basic TSV sample
+
+#### Large/
+- `large-dataset.tsv` - 15 transactions with additional columns
+
+#### Edge Cases/
+- `special-characters.tsv` - Special characters, empty fields, formatting issues
 
 ## Expected Test Results
 
@@ -169,8 +202,93 @@ TXN002,200.00,pending,2024-01-02,Test transaction 2
 # ... add more rows
 ```
 
-## Expected Performance
-- File upload should be instant for small files
-- Processing should complete within 1-2 seconds
-- UI should remain responsive during processing
-- Export should generate downloadable CSV files
+**Expected Match Rate**: ~67% (4 perfect matches out of 6 total matches from 8 internal transactions)
+
+## Testing Guide
+
+### Quick Start Test
+1. Upload `CSV Files/Simple/internal-system.csv` as internal file
+2. Upload `JSON Files/Simple/provider-statement.json` as provider file
+3. Run reconciliation
+4. Verify cross-format compatibility
+
+### Multi-Format Testing Matrix
+
+| Internal Format | Provider Format | Test Purpose |
+|-----------------|-----------------|-------------|
+| CSV | JSON | Cross-format compatibility |
+| Excel | TSV | Different parsing engines |
+| JSON | Excel | Complex to simple format |
+| TSV | CSV | Tab vs comma separation |
+
+### Edge Case Testing
+1. **Format Validation**: Try uploading unsupported files (.txt, .pdf)
+2. **Data Validation**: Use files from Edge Cases folders
+3. **Performance**: Use Large folder files for volume testing
+4. **Error Handling**: Use invalid-references.json and empty-file.csv
+
+### Batch Processing Tests
+1. **Mixed Formats**: Upload multiple different format files
+2. **Large Volumes**: Use Large folder files for batch processing
+3. **Error Recovery**: Mix valid and invalid files
+
+## Creating Custom Test Data
+
+### Using PowerShell Script
+The included `generate-large-dataset.ps1` can create custom CSV datasets:
+```powershell
+.\generate-large-dataset.ps1 -Count 1000 -OutputPath "custom-large.csv"
+```
+
+### Manual File Creation
+For other formats, follow these patterns:
+
+**CSV Format:**
+```csv
+transaction_reference,amount,status,date,description
+TXN001,100.00,completed,2024-01-01,Test transaction
+```
+
+**JSON Format:**
+```json
+[
+  {
+    "transaction_reference": "TXN001",
+    "amount": 100.00,
+    "status": "completed",
+    "date": "2024-01-01",
+    "description": "Test transaction"
+  }
+]
+```
+
+**TSV Format:**
+```tsv
+transaction_reference	amount	status	date	description
+TXN001	100.00	completed	2024-01-01	Test transaction
+```
+
+## Performance Expectations
+
+- **File Upload**: Instant for files < 1MB
+- **Processing**: 1-3 seconds for files < 100 transactions
+- **UI Responsiveness**: Maintained during processing
+- **Export**: CSV/Excel/JSON export functionality
+- **Cross-Format**: No performance penalty for mixed formats
+
+## Troubleshooting
+
+### Common Issues
+1. **"Unsupported file format"**: Ensure file has correct extension
+2. **"Missing transaction_reference"**: Check column/field naming
+3. **"No valid transactions"**: Verify data in transaction_reference column
+4. **Excel not loading**: Try re-saving as .xlsx format
+5. **JSON parsing error**: Validate JSON structure
+
+### File Requirements
+- All formats must include `transaction_reference` column/field
+- Field names are normalized (spaces → underscores, lowercase)
+- Amount fields are automatically converted to numbers
+- Empty transaction references are filtered out
+
+This comprehensive test suite ensures the Mini Reconciliation Tool works reliably across all supported formats and edge cases.

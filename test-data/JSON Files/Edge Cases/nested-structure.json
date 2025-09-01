@@ -1,0 +1,25 @@
+{
+  "data": [
+    {
+      "Transaction Reference": "TXN001",
+      "Amount": 100.50,
+      "Status": "completed",
+      "Date": "2024-01-01",
+      "Description": "Test with nested structure"
+    },
+    {
+      "transaction_reference": "TXN002",
+      "amount": null,
+      "status": "pending",
+      "date": "2024-01-02",
+      "description": "Test with null values"
+    },
+    {
+      "TRANSACTION_REFERENCE": "TXN003",
+      "AMOUNT": "250.00",
+      "STATUS": "COMPLETED",
+      "DATE": "2024-01-03",
+      "DESCRIPTION": "Test with uppercase fields"
+    }
+  ]
+}

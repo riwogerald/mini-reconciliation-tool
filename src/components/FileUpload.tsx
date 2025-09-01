@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { Upload, File, X, AlertCircle, CheckCircle } from 'lucide-react';
 import { LoadingSpinner } from './LoadingSpinner';
 import { ParsedFile } from '../types/transaction';
-import { parseCSVFile } from '../utils/csvProcessor';
+import { parseFile, FileProcessorFactory } from '../utils/processors';
 
 interface FileUploadProps {
   label: string;
@@ -21,9 +21,19 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const getSupportedFormats = () => {
+    const formats = FileProcessorFactory.getSupportedFormats();
+    return formats.map(f => f.name).join(', ');
+  };
+
+  const getSupportedExtensions = () => {
+    return FileProcessorFactory.getSupportedExtensions().join(', ');
+  };
+
   const handleFile = useCallback(async (file: File) => {
-    if (!file.name.toLowerCase().endsWith('.csv')) {
-      setError('Please upload a CSV file');
+    // Check if file format is supported
+    if (!FileProcessorFactory.isSupported(file.name)) {
+      setError(`Unsupported file format. Supported formats: ${getSupportedExtensions()}`);
       return;
     }
 
@@ -36,7 +46,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
     setError(null);
 
     try {
-      const parsedFile = await parseCSVFile(file);
+      const parsedFile = await parseFile(file);
       onFileProcessed(parsedFile);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to process file');
@@ -144,7 +154,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       >
         <input
           type="file"
-          accept=".csv"
+          accept={FileProcessorFactory.getSupportedExtensions().join(',')}
           onChange={handleFileInput}
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
           disabled={isProcessing}
@@ -162,7 +172,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
           <div>
             <p className="text-base sm:text-lg lg:text-xl font-medium text-gray-900">
               {isProcessing ? 'Processing file...' : 
-               isDragOver ? 'Drop your file here' : 'Drop your CSV file here'}
+               isDragOver ? 'Drop your file here' : 'Drop your file here'}
             </p>
             <p className="text-sm sm:text-base text-gray-500 mt-1 sm:mt-2">
               or click to browse and select a file
@@ -170,7 +180,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
           </div>
           
           <div className="text-xs sm:text-sm text-gray-400 space-y-1">
-            <p>CSV files only • Max 10MB</p>
+            <p>Supports: {getSupportedExtensions()} • Max 10MB</p>
             <p>Must contain transaction_reference column</p>
           </div>
         </div>

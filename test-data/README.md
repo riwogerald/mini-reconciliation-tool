@@ -4,6 +4,17 @@
 
 This directory contains comprehensive test data for validating the Mini Reconciliation Tool across various scenarios.
 
+## Supported File Formats
+
+The Mini Reconciliation Tool now supports multiple file formats:
+
+- **CSV** (.csv) - Comma-Separated Values
+- **TSV** (.tsv, .tab) - Tab-Separated Values  
+- **Excel** (.xlsx, .xls) - Microsoft Excel Spreadsheets
+- **JSON** (.json) - JavaScript Object Notation
+
+All formats must contain a `transaction_reference` column/field and can be mixed and matched (e.g., upload a CSV internal file with an Excel provider file).
+
 ## Basic Test Files
 
 ### 1. internal-system.csv
@@ -46,14 +57,28 @@ This directory contains comprehensive test data for validating the Mini Reconcil
 - **Content**: Various mismatches, formatting corrections
 - **Use Case**: Validate mismatch detection and data handling
 
+## Multi-Format Test Files
+
+### 7. sample-internal.json
+- **Purpose**: JSON format testing
+- **Size**: 3 transactions
+- **Content**: TXN-001 to TXN-003 in JSON format
+- **Use Case**: Test JSON file processing and parsing
+
+### 8. sample-provider.tsv
+- **Purpose**: TSV format testing  
+- **Size**: 3 transactions
+- **Content**: TXN-001, TXN-002, TXN-004 in tab-separated format
+- **Use Case**: Test TSV file processing and cross-format reconciliation
+
 ## Error Testing Files
 
-### 7. invalid-missing-columns.csv
+### 9. invalid-missing-columns.csv
 - **Purpose**: Validation error testing
 - **Content**: CSV with wrong column names
 - **Use Case**: Test error handling for invalid file formats
 
-### 8. empty-file.csv
+### 10. empty-file.csv
 - **Purpose**: Edge case testing
 - **Content**: Headers only, no data rows
 - **Use Case**: Test handling of empty datasets
@@ -120,7 +145,13 @@ Check that the summary shows:
 3. **Pagination**: If you add more test data, verify pagination works
 4. **Mismatch Highlighting**: Check that TXN002 and TXN007 show mismatches clearly
 
-### Step 6: Test Edge Cases
+### Step 6: Test Multi-Format Support
+1. **JSON Format**: Upload `sample-internal.json` as internal file
+2. **TSV Format**: Upload `sample-provider.tsv` as provider file
+3. **Mixed Formats**: Try combinations like Excel internal + CSV provider
+4. **Format Validation**: Try uploading unsupported formats (.txt, .pdf)
+
+### Step 7: Test Edge Cases
 1. **Empty Files**: Try uploading empty CSV files
 2. **Invalid Format**: Try uploading a .txt file
 3. **Missing Columns**: Create a CSV without transaction_reference column

@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { Upload, File, X, AlertCircle, CheckCircle, Link, Trash2, Plus } from 'lucide-react';
 import { LoadingSpinner } from './LoadingSpinner';
 import { ParsedFile, FilePair, FileUploadError } from '../types/transaction';
-import { parseCSVFile } from '../utils/csvProcessor';
+import { parseFile, FileProcessorFactory } from '../utils/processors';
 
 interface BatchFileUploadProps {
   onFilePairsChanged: (filePairs: FilePair[]) => void;
@@ -40,14 +40,18 @@ export const BatchFileUpload: React.FC<BatchFileUploadProps> = ({
     onErrorsChanged([]);
   }, [onErrorsChanged]);
 
+  const getSupportedExtensions = () => {
+    return FileProcessorFactory.getSupportedExtensions().join(', ');
+  };
+
   const processFiles = useCallback(async (files: FileList | File[], type: 'internal' | 'provider') => {
     setIsProcessingFiles(true);
     const fileArray = Array.from(files);
     const validFiles: ParsedFile[] = [];
 
     for (const file of fileArray) {
-      if (!file.name.toLowerCase().endsWith('.csv')) {
-        addError(file.name, 'File must be a CSV file');
+      if (!FileProcessorFactory.isSupported(file.name)) {
+        addError(file.name, `Unsupported file format. Supported formats: ${getSupportedExtensions()}`);
         continue;
       }
 
@@ -57,7 +61,7 @@ export const BatchFileUpload: React.FC<BatchFileUploadProps> = ({
       }
 
       try {
-        const parsedFile = await parseCSVFile(file);
+        const parsedFile = await parseFile(file);
         validFiles.push(parsedFile);
       } catch (err) {
         addError(file.name, err instanceof Error ? err.message : 'Failed to process file');
@@ -170,7 +174,7 @@ export const BatchFileUpload: React.FC<BatchFileUploadProps> = ({
       >
         <input
           type="file"
-          accept=".csv"
+          accept={FileProcessorFactory.getSupportedExtensions().join(',')}
           multiple
           onChange={(e) => handleFileInput(e, type)}
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
@@ -189,7 +193,7 @@ export const BatchFileUpload: React.FC<BatchFileUploadProps> = ({
           <div>
             <p className="text-lg font-medium text-gray-900">
               {isProcessingFiles ? 'Processing files...' : 
-               draggedFiles === type ? 'Drop your files here' : 'Drop CSV files here'}
+               draggedFiles === type ? 'Drop your files here' : 'Drop your files here'}
             </p>
             <p className="text-sm text-gray-500 mt-1">
               or click to browse and select multiple files
@@ -197,7 +201,7 @@ export const BatchFileUpload: React.FC<BatchFileUploadProps> = ({
           </div>
           
           <div className="text-sm text-gray-400">
-            <p>CSV files only • Max 10MB per file</p>
+            <p>Supports: {getSupportedExtensions()} • Max 10MB per file</p>
           </div>
         </div>
       </div>

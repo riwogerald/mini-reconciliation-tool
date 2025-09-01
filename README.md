@@ -22,7 +22,7 @@ The Mini Reconciliation Tool streamlines the process of comparing transaction fi
 - **📱 Responsive Design** - Works seamlessly across desktop, tablet, and mobile devices
 - **🚀 Client-side Processing** - No server required, all processing happens in your browser for maximum security
 
-#### 🆕 NEW: Batch Processing Features
+#### 🆕 Batch Processing Features
 - **📁 Multi-File Upload** - Upload multiple internal and provider files simultaneously
 - **🔗 File Pairing Interface** - Intuitive drag-and-drop interface for creating file pairs
 - **⚡ Batch Reconciliation** - Process multiple file pairs with queue management
@@ -155,7 +155,7 @@ The Mini Reconciliation Tool now includes powerful batch processing capabilities
 6. **Review Results** - Examine aggregate and individual results
 7. **Export Reports** - Download comprehensive result bundles
 
-## 🎯 NEWEST: Advanced Analytics Dashboard
+## 🎯 Advanced Analytics Dashboard
 
 The Mini Reconciliation Tool now features a comprehensive **Analytics Dashboard** that transforms reconciliation data into actionable business intelligence. This advanced feature provides intelligent insights, interactive visualizations, and professional reporting capabilities.
 
